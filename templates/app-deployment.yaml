@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.DepforApp.name }}
+spec:
+  replicas: {{ .Values.DepforApp.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.DepforApp.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.DepforApp.app }}
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: {{ .Values.ConfigMapName }}        
+        name: {{ .Values.DepforApp.name }}
+        image: "{{ .Values.Image.repository }}:{{ .Values.Image.tag }}"
+        ports:
+          - containerPort: {{ .Values.DepforApp.port }}
+        volumeMounts:
+          - name: {{ .Values.SecretBearerTokenName }} # mounting the secret that contains bearer token 
+            mountPath: {{ .Values.SecretPath }}
+            readOnly: {{ .Values.DepforApp.readonly }}
+          - name: {{ .Values.PvcDataApp.volumename }}
+            mountPath: {{ .Values.DepforApp.mountpath }}
+      imagePullSecrets:
+      - name: {{ .Values.Image.imagePullSecrets }}
+      volumes:
+        - name: {{ .Values.SecretBearerTokenName }}
+          secret:
+            secretName: {{ .Values.SecretBearerTokenName }}
+      volumes:
+        - name: {{ .Values.PvcDataApp.volumename }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.PvcDataApp.volumename }}                  
