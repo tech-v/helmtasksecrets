@@ -7,6 +7,8 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.DepforApp.app }}
+  strategy:
+   {{- toYaml ( .Values.strategy ) | nindent 4 }}      
   template:
     metadata:
       labels:
@@ -35,4 +37,10 @@ spec:
       volumes:
         - name: {{ .Values.PvcDataApp.volumename }}
           persistentVolumeClaim:
-            claimName: {{ .Values.PvcDataApp.volumename }}                  
+            claimName: {{ .Values.PvcDataApp.volumename }}    
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      schedulerName: {{ .Values.schedulerName }}
+      securityContext: {}
+      restartPolicy: {{ .Values.restartPolicy }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+            
