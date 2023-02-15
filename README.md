@@ -34,4 +34,6 @@ SOLUTION:
 We have made values-template folder that contains values for seperate envs. we can just copy the relevant values file in the chart root directory
 We have used the kubernetes secret to create a secret and used kubernetes volume to inject that secret into container path. App can pick up the bearer token from that particular path and use to connect to secure endpoint.
 
-NOTE: There are multiple ways to do this i.e. we can configure a kubernetes secret and inject it inside container and web app code can get that bearer token from the file injected inside container( done in this case ) OR we can inject secret in ENV and app can use ENV variable to hit the secure end point.
+NOTE: There are multiple ways to do this i.e. we can configure a kubernetes secret and inject it inside container and web app code can get that bearer token from the file injected inside container( done in this case ) OR we can inject secret as ENV VARIABLE of app  and app can use ENV variable to hit the secure end point.
+
+TO CHECK LINTING: use "helm lint" command to lint this chart
