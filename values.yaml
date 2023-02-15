@@ -30,7 +30,7 @@ DepforApp:
   image: registry.sadapay.com/project/image
   cmname: dev-config
   port: 80
-  mountpath: "/home/secret"
+  mountpath: "/home/appdata/"
   replicas: 1
   readonly: true
 
@@ -40,7 +40,7 @@ DepforApp:
 # Method 2: Create a secret with bearer token content and reference in envFrom of deployment file
 # Method 3: Create a CM with bearer token content and inject in deployment file ( insecure and not recommended )  
 SecretBearerTokenName: bearer-token-app
-SecretPath: "/path/inside/container/"
+SecretPath: "/path/inside/container/.token"
 Tokendata:
   token: abcdefghijk......  
 
